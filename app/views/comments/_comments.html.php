@@ -1,5 +1,5 @@
 <?php
-while($comment = $result->fetch_assoc()) {
+ while ( $comment = Comment::fetchAssoc( $comments ) ) {
 ?>
    <tr>
    <td><?php echo $comment[ 'content' ]; ?></td>

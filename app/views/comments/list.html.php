@@ -10,7 +10,7 @@
  <?php include( '_comments.html.php' ); ?>
 </table>
 <?php
-    $result->free();
+   Comment::free( $comments );
    }else{ //if no records found
    echo "No records found.";
    }
