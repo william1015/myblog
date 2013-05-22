@@ -8,7 +8,14 @@
   require_once( 'lib/helpers/application.php' );
   require_once( 'lib/databases/adapters/' . DATABASE_ADAPTER . '.php' );
   DbAdapter::connect();
-  $objMysqli = DbAdapter::getDbConnection();
   include_once( 'app/controllers/' . $controller . '.php' );
-  include_once( 'app/views/' . $controller . '/' . $view . '.html.php' );
+  
+  $layout = 'application';
+  
+  if ( !empty( $layout ) ) {
+    include_once( 'app/views/layouts/' . $layout . '.html.php' );
+  } else {
+    include_once( 'app/views/' . $controller . '/' . $view . '.html.php' );
+  }
+  
   DbAdapter::close();
