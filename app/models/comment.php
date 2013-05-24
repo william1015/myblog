@@ -10,7 +10,7 @@
        * findAllByBlog
        **/
       public static function findAllByBlog( $blog ) {
-        $sqlstr = 'SELECT * FROM `' . self::getEscapedTableName() . '` WHERE `blog_id` = ' . $blog[ 'id' ];
+        $sqlstr = self::queryBuilder( 'select', array( 'where' => ( '`blog_id` = ' . self::realEscapeString( $blog[ 'id' ] ) ) ) );
         
         return( self::query( $sqlstr ) );
       }

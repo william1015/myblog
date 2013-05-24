@@ -1,5 +1,5 @@
 <?php
-  require( 'app/models/blog.php' );
+  require( getModelPathFor( 'blog' ) );
   
   switch( $action ) {
     case 'new':
@@ -11,6 +11,7 @@
       $blog = Blog::findById( $id );
       
       if  ( empty( $blog ) ) {
+        setFlashMessage( 'error', 'The blog With ID "' . $id . '" does not exists.' );
         redirectTo( $controller );
       }
       
@@ -30,6 +31,7 @@
       $blog = Blog::findById( $id );
       
       if  ( empty( $blog ) ) {
+        setFlashMessage( 'error', 'The blog With ID "' . $id . '" does not exists.' );
         redirectTo( $controller );
       }
     break;
@@ -38,6 +40,7 @@
       $blog = Blog::findById( $id );
       
       if  ( empty( $blog ) ) {
+        setFlashMessage( 'error', 'The blog With ID "' . $id . '" does not exists.' );
         redirectTo( $controller );
       }
     break;
@@ -45,17 +48,20 @@
       $blog = $params[ 'blog' ];
       
       if ( Blog::create( $blog ) ) {
+        setFlashMessage( 'notice', 'The blog With ID "' . $blog[ 'id' ] . '" was successfully created.' );
         redirectTo( $controller, 'show', ( 'id=' . $blog[ 'id' ] ) );
       }
       
-      redirectTo( $controller );
+      setFlashMessage( 'error', 'The blog could not be created.' );
+      $formAction = getUrlFor( $controller, 'create' );
+      $view = 'new';
     break;
     case 'update':
       $id = $params[ 'id' ];
       $oldBlog = Blog::findById( $id );
       
       if  ( empty( $oldBlog ) ) {
-        //setFlashMessage( 'error', 'The blog With ID "' . $id . '" does not exists.' );
+        setFlashMessage( 'error', 'The blog With ID "' . $id . '" does not exists.' );
         redirectTo( $controller );
       }
       
@@ -63,12 +69,12 @@
       $blog[ 'id' ] = $id;
       
       if ( Blog::update( $blog ) ) {
-        //setFlashMessage( 'notice', 'The blog With ID "' . $id . '" was successfully updated.' );
+        setFlashMessage( 'notice', 'The blog With ID "' . $id . '" was successfully updated.' );
         redirectTo( $controller, 'show', ( 'id=' . $id ) );
       }
       
-      //setFlashMessage( 'error', 'The blog With ID "' . $id . '" could not be updated.' );
-      $formAction = getUrlFor( array( 'controller' => $controller, 'action' => 'update', 'params' => ( 'id=' . $id ) ) );
+      setFlashMessage( 'error', 'The blog With ID "' . $id . '" could not be updated.' );
+      $formAction = getUrlFor( $controller, 'update', ( 'id=' . $id ) );
       $view = 'edit';
     break;
     case 'destroy':
@@ -76,12 +82,12 @@
       $blog = Blog::findById( $id );
       
       if  ( empty( $blog ) ) {
-        //setFlashMessage( 'error', 'The blog With ID "' . $id . '" does not exists.' );
+        setFlashMessage( 'error', 'The blog With ID "' . $id . '" does not exists.' );
       } else {
         if ( Blog::destroy( $blog ) ) {
-          //setFlashMessage( 'notice', 'The blog With ID "' . $id . '" was successfully destroyed.' );
+          setFlashMessage( 'notice', 'The blog With ID "' . $id . '" was successfully destroyed.' );
         } else {
-          //setFlashMessage( 'error', 'The blog With ID "' . $id . '" could not be destroyed.' );
+          setFlashMessage( 'error', 'The blog With ID "' . $id . '" could not be destroyed.' );
         }
       }
       

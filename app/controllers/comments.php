@@ -1,5 +1,5 @@
 <?php
-  require( 'app/models/comment.php' );
+  require( getModelPathFor( 'comment' ) );
   
   switch( $action ) {
     case 'new':

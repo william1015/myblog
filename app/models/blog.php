@@ -10,7 +10,7 @@
        * comments
        **/
       public static function comments( $blog ) {
-        require( 'app/models/comment.php' );
+        require( getModelPathFor( 'comment' ) );
         return( Comment::findAllByBlog( $blog ) );
       }
       

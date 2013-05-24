@@ -8,7 +8,7 @@
     <th>Content</th>
     <th colspan="3">Actions</th>
   </tr>
-  <?php include( '_blogs.html.php' ); ?>
+  <?php include( getPartialPathFor( 'blogs', 'blogs' ) ); ?>
 </table>
 <?php
     Blog::free( $blogs );

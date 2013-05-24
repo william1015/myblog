@@ -1,21 +1,9 @@
 <?php
-  $params = $_REQUEST;
-  $controller = ( ( !isset( $params[ 'controller' ] ) || empty( $params[ 'controller' ] ) ) ? 'home' : $params[ 'controller' ] );
-  $action = ( ( !isset( $params[ 'action' ] ) || empty( $params[ 'action' ] ) ) ? 'index' : $params[ 'action' ] );
-  $view = $action;
+  session_start();
   
-  require_once( 'config/database.php' );
-  require_once( 'lib/helpers/application.php' );
-  require_once( 'lib/databases/adapters/' . DATABASE_ADAPTER . '.php' );
-  DbAdapter::connect();
-  include_once( 'app/controllers/' . $controller . '.php' );
+  defined( 'PS' ) or define( 'PS', '/' ); // Path Separator
+  defined( 'ROOT_PATH' ) or define( 'ROOT_PATH', ( dirname( __FILE__ ) . PS ) );
+  defined( 'CONFIG_PATH' ) or define( 'CONFIG_PATH', ( ROOT_PATH . 'config' . PS ) );
+  defined( 'LIB_PATH' ) or define( 'LIB_PATH', ( ROOT_PATH . 'lib' . PS ) );
   
-  $layout = 'application';
-  
-  if ( !empty( $layout ) ) {
-    include_once( 'app/views/layouts/' . $layout . '.html.php' );
-  } else {
-    include_once( 'app/views/' . $controller . '/' . $view . '.html.php' );
-  }
-  
-  DbAdapter::close();
+  require_once( CONFIG_PATH . 'boot.php' );
